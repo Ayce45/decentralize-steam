@@ -1,8 +1,8 @@
 # Decentralized Steam ⚡
 
-Install and config and run Ganache with truffle-config
+Install and config and run Ganache with truffle-config.js file path
 
-Install and start frontend
+Install and start frontend :
 
 ```
 npm i
@@ -12,19 +12,19 @@ npm i
 npm start
 ```
 
-install truffle globally
+Install truffle globally :
 
 ```
 npm i -g truffle
 ```
 
-Deploy migration contract
+Deploy migration contract :
 
 ```
 truffle deploy
 ```
 
-Install and setup metamask
+Install and setup metamask browser extension
 
 Add new network :
 
@@ -33,9 +33,9 @@ Add new network :
 - 1337
 - ETH
 
-Add new account with Ganache PRIVATE KEY (seller & buyer)
+Add new account with Ganache accounts PRIVATE KEY (seller & buyer)
 
-When doing a new transaction, on metamask setup gas fee with ganache `gas limit`
+When doing a new transaction, on metamask setup gas fee with ganache `gas limit` number
 
 You can run test with
 
