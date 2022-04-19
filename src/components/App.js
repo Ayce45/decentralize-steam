@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import './App.css';
 import Marketplace from '../abis/Marketplace.json';
-import Navbar from './Navbar';
+import MarketplaceComponent from './Marketplace';
 import Main from './Main';
+import Navbar from './Navbar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 class App extends Component {
 	async componentWillMount() {
@@ -87,26 +89,35 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
-				<Navbar account={this.state.account} />
-				<div className="container-fluid mt-5">
-					<div className="row">
-						<main role="main" className="col-lg-12 d-flex">
-							{this.state.loading ? (
-								<div id="loader" className="text-center">
-									<p className="text-center">Loading...</p>
-								</div>
-							) : (
-								<Main
-									products={this.state.products}
-									createProduct={this.createProduct}
-									purchaseProduct={this.purchaseProduct}
-								/>
-							)}
-						</main>
+			<Router>
+				<div>
+					<Navbar account={this.state.account} />
+					<div className="container-fluid mt-5">
+						<div className="row">
+							<main role="main" className="col-lg-12 d-flex">
+								{this.state.loading ? (
+									<div id="loader" className="text-center">
+										<p className="text-center">Loading...</p>
+									</div>
+								) : (
+									<Routes>
+										<Route
+											path="/marketplace"
+											element={
+												<MarketplaceComponent
+													products={this.state.products}
+													purchaseProduct={this.purchaseProduct}
+												/>
+											}
+										/>
+										<Route path="/main" element={<Main />} />
+									</Routes>
+								)}
+							</main>
+						</div>
 					</div>
 				</div>
-			</div>
+			</Router>
 		);
 	}
 }
