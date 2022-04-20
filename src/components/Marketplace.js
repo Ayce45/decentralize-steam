@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class Marketplace extends Component {
+	componentDidMount() {
+		this.props.loadProducts();
+	}
+
 	render() {
 		return (
 			<div id="content">

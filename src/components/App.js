@@ -8,6 +8,8 @@ import Profile from './Profile';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import toast, { Toaster } from 'react-hot-toast';
+import { CurrencyDollarIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
 class App extends Component {
 	async componentWillMount() {
 		await this.loadWeb3();
@@ -27,6 +29,76 @@ class App extends Component {
 		}
 	}
 
+	productAddNotify() {
+		toast.custom(
+			(t) => (
+				<div
+					className={[
+						'flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out',
+						t.visible ? 'top-0' : '-top-96',
+					]}
+				>
+					<div>
+						<PlusIcon
+							className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+							aria-hidden="true"
+						/>
+					</div>
+					<div className="flex flex-col items-start justify-center ml-4 cursor-default">
+						<h1 className="text-base text-gray-200 font-semibold leading-none tracking-wider">
+							Product Added Successful
+						</h1>
+						<p className="text-sm text-gray-400 mt-2 leading-relaxed tracking-wider">
+							You can see your product in macketplace now
+						</p>
+					</div>
+					<div
+						className="absolute top-2 right-2 cursor-pointer text-lg"
+						onClick={() => toast.dismiss(t.id)}
+					>
+						<XIcon className="h-5 w-5 text-gray-500 group-hover:text-gray-400" />
+					</div>
+				</div>
+			),
+			{ id: 'unique-notification', position: 'top-center' }
+		);
+	}
+
+	productBuyNotify() {
+		toast.custom(
+			(t) => (
+				<div
+					className={[
+						'flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out',
+						t.visible ? 'top-0' : '-top-96',
+					]}
+				>
+					<div>
+						<CurrencyDollarIcon
+							className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+							aria-hidden="true"
+						/>
+					</div>
+					<div className="flex flex-col items-start justify-center ml-4 cursor-default">
+						<h1 className="text-base text-gray-200 font-semibold leading-none tracking-wider">
+							Product Buyed Successful
+						</h1>
+						<p className="text-sm text-gray-400 mt-2 leading-relaxed tracking-wider">
+							You can see your key in your profile
+						</p>
+					</div>
+					<div
+						className="absolute top-2 right-2 cursor-pointer text-lg"
+						onClick={() => toast.dismiss(t.id)}
+					>
+						<XIcon className="h-5 w-5 text-gray-500 group-hover:text-gray-400" />
+					</div>
+				</div>
+			),
+			{ id: 'unique-notification', position: 'top-center' }
+		);
+	}
+
 	async loadBlockchainData() {
 		const web3 = window.web3;
 		// Load account
@@ -40,7 +112,6 @@ class App extends Component {
 				networkData.address
 			);
 			this.setState({ marketplace });
-			await this.loadProducts();
 			this.setState({ loading: false });
 		} else {
 			window.alert('Marketplace contract not deployed to detected network.');
@@ -53,15 +124,11 @@ class App extends Component {
 			.call();
 		this.setState({ productCount });
 		// Load products
+		let products = [];
 		for (var i = 1; i <= productCount; i++) {
-			const product = await this.state.marketplace.methods.products(i).call();
-			this.setState({
-				products: [...this.state.products, product],
-			});
+			products.push(await this.state.marketplace.methods.products(i).call());
 		}
-		console.log('products loaded');
-		console.log(this.state.account);
-		console.log(this.state.products);
+		this.setState({ products });
 	}
 
 	constructor(props) {
@@ -76,6 +143,7 @@ class App extends Component {
 
 		this.createProduct = this.createProduct.bind(this);
 		this.purchaseProduct = this.purchaseProduct.bind(this);
+		this.loadProducts = this.loadProducts.bind(this);
 	}
 
 	async createProduct(name, price) {
@@ -84,7 +152,7 @@ class App extends Component {
 			.createProduct(name, price)
 			.send({ from: this.state.account })
 			.once('transactionHash', async () => {
-				await this.loadProducts();
+				this.productAddNotify();
 				this.setState({ loading: false });
 			});
 	}
@@ -95,6 +163,8 @@ class App extends Component {
 			.purchaseProduct(id)
 			.send({ from: this.state.account, value: price })
 			.once('transactionHash', () => {
+				this.loadProducts();
+				this.productBuyNotify();
 				this.setState({ loading: false });
 			});
 	}
@@ -117,8 +187,10 @@ class App extends Component {
 											path="/"
 											element={
 												<MarketplaceComponent
+													account={this.state.account}
 													products={this.state.products}
 													purchaseProduct={this.purchaseProduct}
+													loadProducts={this.loadProducts}
 												/>
 											}
 										/>
@@ -129,6 +201,7 @@ class App extends Component {
 													account={this.state.account}
 													products={this.state.products}
 													purchaseProduct={this.purchaseProduct}
+													loadProducts={this.loadProducts}
 												/>
 											}
 										/>
