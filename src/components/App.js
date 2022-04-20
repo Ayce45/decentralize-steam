@@ -4,6 +4,7 @@ import './App.css';
 import Marketplace from '../abis/Marketplace.json';
 import MarketplaceComponent from './Marketplace';
 import Product from './Product';
+import Profile from './Profile';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -59,6 +60,8 @@ class App extends Component {
 			});
 		}
 		console.log('products loaded');
+		console.log(this.state.account);
+		console.log(this.state.products);
 	}
 
 	constructor(props) {
@@ -123,6 +126,7 @@ class App extends Component {
 											path="/marketplace"
 											element={
 												<MarketplaceComponent
+													account={this.state.account}
 													products={this.state.products}
 													purchaseProduct={this.purchaseProduct}
 												/>
@@ -132,6 +136,7 @@ class App extends Component {
 											path="/product"
 											element={<Product createProduct={this.createProduct} />}
 										/>
+										<Route path="/profile" element={<Profile />} />
 									</Routes>
 								)}
 							</main>
