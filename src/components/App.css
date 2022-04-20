@@ -1,1 +1,5 @@
 /* Styles go here */
+.active {
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}

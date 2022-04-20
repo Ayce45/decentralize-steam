@@ -14,6 +14,7 @@ import Profile from "./Profile";
 import TopOwner from "./topOwner";
 import TopBuyer from "./topBuyer";
 import Navbar from "./Navbar";
+import Main from "./Main";
 class App extends Component {
   async componentDidMount() {
     await this.loadWeb3();
@@ -203,14 +204,7 @@ class App extends Component {
                   <Routes>
                     <Route
                       path="/"
-                      element={
-                        <MarketplaceComponent
-                          account={this.state.account}
-                          products={this.state.products}
-                          purchaseProduct={this.purchaseProduct}
-                          loadProducts={this.loadProducts}
-                        />
-                      }
+                      element={<Main account={this.state.account} />}
                     />
                     <Route
                       path="/marketplace"
