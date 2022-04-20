@@ -5,13 +5,14 @@ import Marketplace from '../abis/Marketplace.json';
 import MarketplaceComponent from './Marketplace';
 import Product from './Product';
 import Profile from './Profile';
+import TopOwner from './topOwner';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import toast, { Toaster } from 'react-hot-toast';
 import { CurrencyDollarIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
 class App extends Component {
-	async componentWillMount() {
+	async componentDidMount() {
 		await this.loadWeb3();
 		await this.loadBlockchainData();
 	}
@@ -215,6 +216,16 @@ class App extends Component {
 											path="/profile"
 											element={
 												<Profile
+													account={this.state.account}
+													products={this.state.products}
+													loadProducts={this.loadProducts}
+												/>
+											}
+										/>
+										<Route
+											path="/top-owner"
+											element={
+												<TopOwner
 													account={this.state.account}
 													products={this.state.products}
 													loadProducts={this.loadProducts}

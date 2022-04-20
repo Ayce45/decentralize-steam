@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Profile extends Component {
+class TopOwner extends Component {
 	componentDidMount() {
 		this.props.loadProducts();
 	}
@@ -13,7 +13,7 @@ class Profile extends Component {
 					<div className="max-w-4xl w-full space-y-8">
 						<div>
 							<h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-								My buyed products
+								Top owner
 							</h1>
 							<p className="mt-2 text-center text-sm text-gray-600">
 								Or{' '}
@@ -32,36 +32,25 @@ class Profile extends Component {
 										scope="col"
 										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
 									>
-										Name
+										Owner
 									</th>
 									<th
 										scope="col"
 										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
 									>
-										Price
+										Products owned
 									</th>
 								</tr>
 							</thead>
 							<tbody className="bg-white">
-								{this.props.products
-									.filter((product) => product.purchased)
-									.filter((product) => this.props.account === product.owner)
-									.map((product, key) => {
-										return (
-											<tr key={key}>
-												<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-													{product.name}
-												</td>
-												<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-													{window.web3.utils.fromWei(
-														product.price.toString(),
-														'Ether'
-													)}{' '}
-													Eth
-												</td>
-											</tr>
-										);
-									})}
+								{Object.keys(
+									this.props.products.reduce((rv, x) => {
+										(rv[x.owner] = rv[x.owner] || []).push(x);
+										return rv;
+									}, {})
+								).reduce((acc, curr) => {
+									return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
+								}, {})}
 							</tbody>
 						</table>
 					</div>
@@ -71,4 +60,4 @@ class Profile extends Component {
 	}
 }
 
-export default Profile;
+export default TopOwner;
