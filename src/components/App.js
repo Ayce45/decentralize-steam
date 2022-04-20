@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import Web3 from 'web3';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Marketplace from '../abis/Marketplace.json';
-import toast, { Toaster } from 'react-hot-toast';
-import { CurrencyDollarIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
+import React, { Component } from "react";
+import Web3 from "web3";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Marketplace from "../abis/Marketplace.json";
+import toast, { Toaster } from "react-hot-toast";
+import { CurrencyDollarIcon, PlusIcon, XIcon } from "@heroicons/react/solid";
 
-import './App.css';
+import "./App.css";
 
 // Components
-import MarketplaceComponent from './Marketplace';
-import Product from './Product';
-import Profile from './Profile';
-import TopOwner from './topOwner';
-import TopBuyer from './topBuyer';
-import Navbar from './Navbar';
+import MarketplaceComponent from "./Marketplace";
+import Product from "./Product";
+import Profile from "./Profile";
+import TopOwner from "./topOwner";
+import TopBuyer from "./topBuyer";
+import Navbar from "./Navbar";
 class App extends Component {
   async componentDidMount() {
     await this.loadWeb3();
@@ -33,75 +33,75 @@ class App extends Component {
     }
   }
 
-	productAddNotify() {
-		toast.custom(
-			(t) => (
-				<div
-					className={[
-						'flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out',
-						t.visible ? 'top-0' : '-top-96',
-					]}
-				>
-					<div>
-						<PlusIcon
-							className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-							aria-hidden="true"
-						/>
-					</div>
-					<div className="flex flex-col items-start justify-center ml-4 cursor-default">
-						<h1 className="text-base text-gray-200 font-semibold leading-none tracking-wider">
-							Product Added Successful
-						</h1>
-						<p className="text-sm text-gray-400 mt-2 leading-relaxed tracking-wider">
-							You can see your product in macketplace now
-						</p>
-					</div>
-					<div
-						className="absolute top-2 right-2 cursor-pointer text-lg"
-						onClick={() => toast.dismiss(t.id)}
-					>
-						<XIcon className="h-5 w-5 text-gray-500 group-hover:text-gray-400" />
-					</div>
-				</div>
-			),
-			{ id: 'unique-notification', position: 'bottom-center', duration: 2000 }
-		);
-	}
+  productAddNotify() {
+    toast.custom(
+      (t) => (
+        <div
+          className={[
+            "flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out",
+            t.visible ? "top-0" : "-top-96",
+          ]}
+        >
+          <div>
+            <PlusIcon
+              className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+              aria-hidden="true"
+            />
+          </div>
+          <div className="flex flex-col items-start justify-center ml-4 cursor-default">
+            <h1 className="text-base text-gray-200 font-semibold leading-none tracking-wider">
+              Product Added Successful
+            </h1>
+            <p className="text-sm text-gray-400 mt-2 leading-relaxed tracking-wider">
+              You can see your product in macketplace now
+            </p>
+          </div>
+          <div
+            className="absolute top-2 right-2 cursor-pointer text-lg"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            <XIcon className="h-5 w-5 text-gray-500 group-hover:text-gray-400" />
+          </div>
+        </div>
+      ),
+      { id: "unique-notification", position: "bottom-center", duration: 2000 }
+    );
+  }
 
-	productBuyNotify() {
-		toast.custom(
-			(t) => (
-				<div
-					className={[
-						'flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out',
-						t.visible ? 'top-0' : '-top-96',
-					]}
-				>
-					<div>
-						<CurrencyDollarIcon
-							className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-							aria-hidden="true"
-						/>
-					</div>
-					<div className="flex flex-col items-start justify-center ml-4 cursor-default">
-						<h1 className="text-base text-gray-200 font-semibold leading-none tracking-wider">
-							Product Buyed Successful
-						</h1>
-						<p className="text-sm text-gray-400 mt-2 leading-relaxed tracking-wider">
-							You can see your key in your profile
-						</p>
-					</div>
-					<div
-						className="absolute top-2 right-2 cursor-pointer text-lg"
-						onClick={() => toast.dismiss(t.id)}
-					>
-						<XIcon className="h-5 w-5 text-gray-500 group-hover:text-gray-400" />
-					</div>
-				</div>
-			),
-			{ id: 'unique-notification', position: 'bottom-center', duration: 2000 }
-		);
-	}
+  productBuyNotify() {
+    toast.custom(
+      (t) => (
+        <div
+          className={[
+            "flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out",
+            t.visible ? "top-0" : "-top-96",
+          ]}
+        >
+          <div>
+            <CurrencyDollarIcon
+              className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+              aria-hidden="true"
+            />
+          </div>
+          <div className="flex flex-col items-start justify-center ml-4 cursor-default">
+            <h1 className="text-base text-gray-200 font-semibold leading-none tracking-wider">
+              Product Buyed Successful
+            </h1>
+            <p className="text-sm text-gray-400 mt-2 leading-relaxed tracking-wider">
+              You can see your key in your profile
+            </p>
+          </div>
+          <div
+            className="absolute top-2 right-2 cursor-pointer text-lg"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            <XIcon className="h-5 w-5 text-gray-500 group-hover:text-gray-400" />
+          </div>
+        </div>
+      ),
+      { id: "unique-notification", position: "bottom-center", duration: 2000 }
+    );
+  }
 
   async loadBlockchainData() {
     const web3 = window.web3;
@@ -241,6 +241,16 @@ class App extends Component {
                       path="/top-owner"
                       element={
                         <TopOwner
+                          account={this.state.account}
+                          products={this.state.products}
+                          loadProducts={this.loadProducts}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/top-buyer"
+                      element={
+                        <TopBuyer
                           account={this.state.account}
                           products={this.state.products}
                           loadProducts={this.loadProducts}
