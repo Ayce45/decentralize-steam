@@ -39,30 +39,49 @@ class App extends Component {
 				networkData.address
 			);
 			this.setState({ marketplace });
+			await this.loadProducts();
 			this.setState({ loading: false });
 		} else {
 			window.alert('Marketplace contract not deployed to detected network.');
 		}
 	}
 
+	async loadProducts() {
+		const productCount = await this.state.marketplace.methods
+			.productCount()
+			.call();
+		this.setState({ productCount });
+		// Load products
+		for (var i = 1; i <= productCount; i++) {
+			const product = await this.state.marketplace.methods.products(i).call();
+			this.setState({
+				products: [...this.state.products, product],
+			});
+		}
+		console.log('products loaded');
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
 			account: '',
+			products: [],
 			productCount: 0,
-			loading: false,
+			loading: true,
+			marketplace: {},
 		};
 
 		this.createProduct = this.createProduct.bind(this);
 		this.purchaseProduct = this.purchaseProduct.bind(this);
 	}
 
-	createProduct(name, price) {
+	async createProduct(name, price) {
 		this.setState({ loading: true });
 		this.state.marketplace.methods
 			.createProduct(name, price)
 			.send({ from: this.state.account })
-			.once('transactionHash', () => {
+			.once('transactionHash', async () => {
+				await this.loadProducts();
 				this.setState({ loading: false });
 			});
 	}
@@ -92,6 +111,15 @@ class App extends Component {
 								) : (
 									<Routes>
 										<Route
+											path="/"
+											element={
+												<MarketplaceComponent
+													products={this.state.products}
+													purchaseProduct={this.purchaseProduct}
+												/>
+											}
+										/>
+										<Route
 											path="/marketplace"
 											element={
 												<MarketplaceComponent
@@ -101,7 +129,7 @@ class App extends Component {
 											}
 										/>
 										<Route
-											path="/main"
+											path="/product"
 											element={<Product createProduct={this.createProduct} />}
 										/>
 									</Routes>
