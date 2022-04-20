@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Marketplace from '../abis/Marketplace.json';
+import toast, { Toaster } from 'react-hot-toast';
+import { CurrencyDollarIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
+
+import './App.css';
+
+// Components
 import MarketplaceComponent from './Marketplace';
 import Product from './Product';
 import Profile from './Profile';
 import TopOwner from './topOwner';
+import TopBuyer from './topBuyer';
 import Navbar from './Navbar';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import toast, { Toaster } from 'react-hot-toast';
-import { CurrencyDollarIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
 class App extends Component {
 	async componentDidMount() {
 		await this.loadWeb3();
@@ -61,7 +65,7 @@ class App extends Component {
 					</div>
 				</div>
 			),
-			{ id: 'unique-notification', position: 'top-center' }
+			{ id: 'unique-notification', position: 'bottom-center', duration: 2000 }
 		);
 	}
 
@@ -96,7 +100,7 @@ class App extends Component {
 					</div>
 				</div>
 			),
-			{ id: 'unique-notification', position: 'top-center' }
+			{ id: 'unique-notification', position: 'bottom-center', duration: 2000 }
 		);
 	}
 
@@ -226,6 +230,16 @@ class App extends Component {
 											path="/top-owner"
 											element={
 												<TopOwner
+													account={this.state.account}
+													products={this.state.products}
+													loadProducts={this.loadProducts}
+												/>
+											}
+										/>
+										<Route
+											path="/top-buyer"
+											element={
+												<TopBuyer
 													account={this.state.account}
 													products={this.state.products}
 													loadProducts={this.loadProducts}
