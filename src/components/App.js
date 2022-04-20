@@ -210,7 +210,16 @@ class App extends Component {
 											path="/product"
 											element={<Product createProduct={this.createProduct} />}
 										/>
-										<Route path="/profile" element={<Profile />} />
+										<Route
+											path="/profile"
+											element={
+												<Profile
+													account={this.state.account}
+													products={this.state.products}
+													loadProducts={this.loadProducts}
+												/>
+											}
+										/>
 									</Routes>
 								)}
 							</main>
