@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class TopOwner extends Component {
+class TopBuyer extends Component {
 	componentDidMount() {
 		this.props.loadProducts().then(() => {
+			console.log(this.props.products);
+
 			this.setState({
 				groupByOwner: Object.entries(
-					this.props.products.reduce((rv, x) => {
-						(rv[x.owner] = rv[x.owner] || []).push(x);
-						return rv;
-					}, {})
+					this.props.products
+						.filter((product) => product.purchased)
+						.reduce((rv, x) => {
+							(rv[x.owner] = rv[x.owner] || []).push(x);
+							return rv;
+						}, {})
 				).sort((a, b) => b[1].length - a[1].length),
 			});
 		});
@@ -29,7 +33,7 @@ class TopOwner extends Component {
 					<div className="max-w-4xl w-full space-y-8">
 						<div>
 							<h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-								Top owner
+								Top buyer
 							</h1>
 							<p className="mt-2 text-center text-sm text-gray-600">
 								Or{' '}
@@ -48,13 +52,13 @@ class TopOwner extends Component {
 										scope="col"
 										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
 									>
-										Owner
+										Buyer
 									</th>
 									<th
 										scope="col"
 										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
 									>
-										Products owned
+										Products buyed
 									</th>
 								</tr>
 							</thead>
@@ -78,4 +82,4 @@ class TopOwner extends Component {
 	}
 }
 
-export default TopOwner;
+export default TopBuyer;

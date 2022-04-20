@@ -74,15 +74,14 @@ class Navbar extends Component {
 											>
 												{'Top Owner'}
 											</Link>
-											<a
-												key={'Top Buyer'}
-												href={''}
+											<Link
+												to="/top-buyer"
 												className={
 													'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
 												}
 											>
 												{'Top Buyer'}
-											</a>
+											</Link>
 										</div>
 									</div>
 								</div>
