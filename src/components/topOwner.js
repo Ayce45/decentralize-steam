@@ -41,36 +41,40 @@ class TopOwner extends Component {
 								</Link>
 							</p>
 						</div>
-						<table className="border-collapse table-auto w-full text-sm">
-							<thead>
-								<tr>
-									<th
-										scope="col"
-										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
-									>
-										Owner
-									</th>
-									<th
-										scope="col"
-										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
-									>
-										Products owned
-									</th>
-								</tr>
-							</thead>
-							<tbody className="bg-white">
-								{this.state.groupByOwner.map(([key, value], i) => {
-									return (
-										<tr key={i}>
-											<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-												{key}
-											</td>
-											<th>{value.length}</th>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
+						{this.state.groupByOwner.length ? (
+							<table className="border-collapse table-auto w-full text-sm">
+								<thead>
+									<tr>
+										<th
+											scope="col"
+											className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
+										>
+											Owner
+										</th>
+										<th
+											scope="col"
+											className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
+										>
+											Products owned
+										</th>
+									</tr>
+								</thead>
+								<tbody className="bg-white">
+									{this.state.groupByOwner.map(([key, value], i) => {
+										return (
+											<tr key={i}>
+												<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
+													{key}
+												</td>
+												<th>{value.length}</th>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
+						) : (
+							<p className="text-center text-gray-500">No data found</p>
+						)}
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PlusIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 class Product extends Component {
 	render() {
@@ -25,12 +26,24 @@ class Product extends Component {
 						<form
 							onSubmit={(event) => {
 								event.preventDefault();
-								const name = this.productName.value;
-								const price = window.web3.utils.toWei(
-									this.productPrice.value.toString(),
-									'Ether'
-								);
-								this.props.createProduct(name, price);
+								try {
+									const name = this.productName.value;
+									const price = window.web3.utils.toWei(
+										this.productPrice.value.toString(),
+										'Ether'
+									);
+									this.props.createProduct(name, price);
+								} catch (e) {
+									toast.error("This didn't work.", {
+										position: 'bottom-center',
+										duration: 2000,
+										style: {
+											borderRadius: '10px',
+											background: '#111827',
+											color: '#fff',
+										},
+									});
+								}
 							}}
 						>
 							<label className="block">
@@ -54,7 +67,7 @@ class Product extends Component {
 								</span>
 								<input
 									id="productPrice"
-									type="text"
+									type="number"
 									ref={(input) => {
 										this.productPrice = input;
 									}}

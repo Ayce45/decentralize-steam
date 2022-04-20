@@ -7,7 +7,7 @@ class TopBuyer extends Component {
 			console.log(this.props.products);
 
 			this.setState({
-				groupByOwner: Object.entries(
+				groupByBuyer: Object.entries(
 					this.props.products
 						.filter((product) => product.purchased)
 						.reduce((rv, x) => {
@@ -22,7 +22,7 @@ class TopBuyer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			groupByOwner: [],
+			groupByBuyer: [],
 		};
 	}
 
@@ -45,36 +45,40 @@ class TopBuyer extends Component {
 								</Link>
 							</p>
 						</div>
-						<table className="border-collapse table-auto w-full text-sm">
-							<thead>
-								<tr>
-									<th
-										scope="col"
-										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
-									>
-										Buyer
-									</th>
-									<th
-										scope="col"
-										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
-									>
-										Products buyed
-									</th>
-								</tr>
-							</thead>
-							<tbody className="bg-white">
-								{this.state.groupByOwner.map(([key, value], i) => {
-									return (
-										<tr key={i}>
-											<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-												{key}
-											</td>
-											<th>{value.length}</th>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
+						{this.state.groupByBuyer.length ? (
+							<table className="border-collapse table-auto w-full text-sm">
+								<thead>
+									<tr>
+										<th
+											scope="col"
+											className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
+										>
+											Buyer
+										</th>
+										<th
+											scope="col"
+											className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
+										>
+											Products buyed
+										</th>
+									</tr>
+								</thead>
+								<tbody className="bg-white">
+									{this.state.groupByBuyer.map(([key, value], i) => {
+										return (
+											<tr key={i}>
+												<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
+													{key}
+												</td>
+												<th>{value.length}</th>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
+						) : (
+							<p className="text-center text-gray-500">No data found</p>
+						)}
 					</div>
 				</div>
 			</div>

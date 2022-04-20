@@ -25,45 +25,52 @@ class Profile extends Component {
 								</Link>
 							</p>
 						</div>
-						<table className="border-collapse table-auto w-full text-sm">
-							<thead>
-								<tr>
-									<th
-										scope="col"
-										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
-									>
-										Name
-									</th>
-									<th
-										scope="col"
-										className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
-									>
-										Price
-									</th>
-								</tr>
-							</thead>
-							<tbody className="bg-white">
-								{this.props.products
-									.filter((product) => product.purchased)
-									.filter((product) => this.props.account === product.owner)
-									.map((product, key) => {
-										return (
-											<tr key={key}>
-												<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-													{product.name}
-												</td>
-												<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-													{window.web3.utils.fromWei(
-														product.price.toString(),
-														'Ether'
-													)}{' '}
-													Eth
-												</td>
-											</tr>
-										);
-									})}
-							</tbody>
-						</table>
+						{this.props.products
+							.filter((product) => product.purchased)
+							.filter((product) => this.props.account === product.owner)
+							.length ? (
+							<table className="border-collapse table-auto w-full text-sm">
+								<thead>
+									<tr>
+										<th
+											scope="col"
+											className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
+										>
+											Name
+										</th>
+										<th
+											scope="col"
+											className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400  text-left"
+										>
+											Price
+										</th>
+									</tr>
+								</thead>
+								<tbody className="bg-white">
+									{this.props.products
+										.filter((product) => product.purchased)
+										.filter((product) => this.props.account === product.owner)
+										.map((product, key) => {
+											return (
+												<tr key={key}>
+													<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
+														{product.name}
+													</td>
+													<td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
+														{window.web3.utils.fromWei(
+															product.price.toString(),
+															'Ether'
+														)}{' '}
+														Eth
+													</td>
+												</tr>
+											);
+										})}
+								</tbody>
+							</table>
+						) : (
+							<p className="text-center text-gray-500">No data found</p>
+						)}
 					</div>
 				</div>
 			</div>
