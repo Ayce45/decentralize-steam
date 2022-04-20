@@ -163,9 +163,10 @@ class App extends Component {
 			.purchaseProduct(id)
 			.send({ from: this.state.account, value: price })
 			.once('transactionHash', () => {
-				this.loadProducts();
-				this.productBuyNotify();
-				this.setState({ loading: false });
+				this.loadProducts().then(() => {
+					this.productBuyNotify();
+					this.setState({ loading: false });
+				});
 			});
 	}
 
