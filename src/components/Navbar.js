@@ -101,7 +101,7 @@ class Navbar extends Component {
 												<span className="sr-only">Open user menu</span>
 												<img
 													className="h-8 w-8 rounded-full"
-													src={`https://source.boringavatars.com/marble/120/${this.props.account}`}
+													src={`https://avatars.dicebear.com/api/adventurer-neutral/${this.props.account}.svg`}
 													title={this.props.account}
 													alt="User"
 												/>
