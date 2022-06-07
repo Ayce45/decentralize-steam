@@ -29,7 +29,7 @@ class Navbar extends Component {
 									</Disclosure.Button>
 								</div>
 								<div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-									<NavLink to="/">
+									<NavLink to="/" className="not-active">
 										<div className="flex-shrink-0 flex items-center">
 											<img
 												className="block lg:hidden h-8 w-auto"
