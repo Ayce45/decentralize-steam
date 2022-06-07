@@ -1,5 +1,6 @@
 # Decentralized Steam ⚡
 
+## Setup
 Install and config and run Ganache with truffle-config.js file path
 
 Install and start frontend :
@@ -42,3 +43,6 @@ You can run test with
 ```
 truffle test
 ```
+
+## Preview
+![Animation](https://user-images.githubusercontent.com/32338891/164256958-9fd0f40c-78c4-4f29-bef5-f6e9d4a6186a.gif)
